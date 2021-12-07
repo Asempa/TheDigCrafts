@@ -1,3 +1,29 @@
+<?php
+    include_once (dirname(__FILE__)) . '/../settings/core.php';
+    include_once (dirname(__FILE__)) . '/../controller/productController.php';
+    include_once (dirname(__FILE__)) . '/../controller/cartController.php';
+    include_once (dirname(__FILE__)) . '/../controller/wishlistController.php';
+
+
+    $best_sellers = get_best_controller();
+    $featured_products = featured_products_controller();
+
+    if (isset($_SESSION['user_id'])) {
+        $user_id = $_SESSION['user_id'];  //user_id is now session
+        $product_wishlist = select_all_wishlist_lg_controller($user_id);
+        $cart_count = count_cart_lg_controller($_SESSION['user_id']);
+        $wishlist_count = count_wishlist_lg_controller($_SESSION['user_id']);
+    } else {
+        $ip_Address = getIpAddress();
+        $cart_count = count_cart_gst_controller($ip_Address);
+    }
+
+
+if (isset($_SESSION["user_id"]) && isset($_SESSION["user_role"])) {
+    if ($_SESSION["user_role"] === '2') {
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,33 +38,32 @@
 
 <section class="bg-blue text-orange flex justify-between h-12 font-bold">
     <div class="p-4 flex items-center">TheDigCrafts</div>
-    <div class="flex items-center">Shop</div>
+    <a href="../view/shop.php"><div class="flex items-center">Shop</div></a>
     <div class="flex flex-row items-center">
         <div class="flex flex-row items-center">
             <img src="../images/icons/Wishlist.png" class="h-6 object-scale-down " alt="">
-            <div class="text-base">(3)</div>
+            <div class="text-base">(<?php echo $wishlist_count['count']; ?>)</div>
         </div>
 
-        <div class="flex flex-row items-center">
+        <a href="cart.php"><div class="flex flex-row items-center">
             <img src="../images/icons/Cart.png" class="h-6 object-scale-down ml-6" alt="">
-            <div class="">(5)</div>
-        </div>
+            <div class="">(<?php echo $cart_count['count']; ?>)</div>
+        </div></a>
 
-        <img src="../images/icons/Avatar.png" class=" h-6 object-scale-down items-center m-6" alt="">
+        <a href="../settings/logout.php"><div class="mx-6">Logout</div></a>
 
     </div>
 </section>
 
-    <div class="bg-blue p-3 m-3 w-14 text-white font-semibold"> <a href="">  Back </a></div>
 
 <section class="flex flex-row mt-12">
     <div class="flex flex-col justify-between items-start mx-8 font-bold w-1/6">
-        <a href="" class="w-full mb-6"><div class="flex items-center p-3 rounded-lg border-2 border-gray w-full text-blue font-bold">
+        <a href="../view/myProfile.php" class="w-full mb-6"><div class="flex items-center p-3 rounded-lg border-2 border-gray w-full text-blue font-bold">
             <img src="../images/icons/Avatar 2.png" alt="" class="h-8 object-scale-down mr-6">
             <div> Profile </div>
         </div></a>
 
-        <a href="" class="w-full"><div class="flex items-center mb-6  w-full rounded-lg border-2 border-gray text-blue p-3">
+        <a href="../view/myOrders.php" class="w-full"><div class="flex items-center mb-6  w-full rounded-lg border-2 border-gray text-blue p-3">
             <img src="../images/icons/Orders.png" alt="" class="h-8 object-scale-down mr-6">
             <div> My Orders </div>
         </div></a>
@@ -49,141 +74,34 @@
         </div>
 
 
-        <a href="" class="w-full mb-6"><div class="flex items-center border-2 border-gray rounded-lg p-3">
-            <img src="../images/icons/Review.png" alt="" class="h-8 object-scale-down mr-6">
-            <div> Review </div>
-        </div></a>
 
     </div>
 
             <div class="flex flex-col w-2/3 mx-6 h-80 overflow-y-auto">
+            <?php
+            foreach ($product_wishlist as $wishlist) {
+                ?>
                 <div class="flex flex-row justify-between h-20 mb-6">
                     <div class="flex flex-row justify-between  mr-32">
                         <div class="mr-6">
-                            <img src="../images/icons/Resin Background 2.png" alt="" class="h-16 object-scale-down border-4 border-blue">
+                            <img src="<?php echo $wishlist['product_image'] ?>" alt="" class="h-16 object-scale-down border-4 border-blue">
                         </div>
                         <div class="flex flex-col font-semibold justify-center h-16">
-                            <div> Nyansapo Coloured Pendant </div>
-                            <div> GHC 13 </div>
+                            <div> <?php echo $wishlist['product_title'] ?> </div>
+                            <div> &#8373;<?php echo $wishlist['product_price'] ?> </div>
                         </div>
                     </div>
                     <div class="flex justify-between items-center">
                         <div class="flex flex-row justify-between">
-                        <img src="../images/icons/Delete.png" alt="" class="h-8 object-scale-down ">
-                        <img src="../images/icons/Cart 3.png" alt="" class="h-8 object-scale-down ml-10">
+                        <a href="../actions/removeFromWishlist.php?w_id=<?php echo $wishlist['product_id']?>"><img src="../images/icons/Delete.png" alt="" class="h-8 object-scale-down "></a>
+                        <a href="../actions/addToCart.php?c_id=<?php echo $wishlist['product_id']?> &qty=1"><img src="../images/icons/Cart 3.png" alt="" class="h-8 object-scale-down ml-10"></a>
                         </div>
                     </div>
                 </div>
-
-                <div class="flex flex-row justify-between h-20 mb-6">
-                    <div class="flex flex-row justify-between  mr-32">
-                        <div class="mr-6">
-                            <img src="../images/icons/Resin Background 2.png" alt="" class="h-16 object-scale-down border-4 border-blue">
-                        </div>
-                        <div class="flex flex-col font-semibold justify-center h-16">
-                            <div> Nyansapo Coloured Pendant </div>
-                            <div> GHC 13 </div>
-                        </div>
-                    </div>
-                    <div class="flex justify-between items-center">
-                        <div class="flex flex-row justify-between">
-                        <img src="../images/icons/Delete.png" alt="" class="h-8 object-scale-down ">
-                        <img src="../images/icons/Cart 3.png" alt="" class="h-8 object-scale-down ml-10">
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="flex flex-row justify-between h-20 mb-6">
-                    <div class="flex flex-row justify-between  mr-32">
-                        <div class="mr-6">
-                            <img src="../images/icons/Resin Background 2.png" alt="" class="h-16 object-scale-down border-4 border-blue">
-                        </div>
-                        <div class="flex flex-col font-semibold justify-center h-16">
-                            <div> Nyansapo Coloured Pendant </div>
-                            <div> GHC 13 </div>
-                        </div>
-                    </div>
-                    <div class="flex justify-between items-center">
-                        <div class="flex flex-row justify-between">
-                        <img src="../images/icons/Delete.png" alt="" class="h-8 object-scale-down ">
-                        <img src="../images/icons/Cart 3.png" alt="" class="h-8 object-scale-down ml-10">
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="flex flex-row justify-between h-20 mb-6">
-                    <div class="flex flex-row justify-between  mr-32">
-                        <div class="mr-6">
-                            <img src="../images/icons/Resin Background 2.png" alt="" class="h-16 object-scale-down border-4 border-blue">
-                        </div>
-                        <div class="flex flex-col font-semibold justify-center h-16">
-                            <div> Nyansapo Coloured Pendant </div>
-                            <div> GHC 13 </div>
-                        </div>
-                    </div>
-                    <div class="flex justify-between items-center">
-                        <div class="flex flex-row justify-between">
-                        <img src="../images/icons/Delete.png" alt="" class="h-8 object-scale-down ">
-                        <img src="../images/icons/Cart 3.png" alt="" class="h-8 object-scale-down ml-10">
-                        </div>
-                    </div>
-                </div>
-                <div class="flex flex-row justify-between h-20 mb-6">
-                    <div class="flex flex-row justify-between  mr-32">
-                        <div class="mr-6">
-                            <img src="../images/icons/Resin Background 2.png" alt="" class="h-16 object-scale-down border-4 border-blue">
-                        </div>
-                        <div class="flex flex-col font-semibold justify-center h-16">
-                            <div> Nyansapo Coloured Pendant </div>
-                            <div> GHC 13 </div>
-                        </div>
-                    </div>
-                    <div class="flex justify-between items-center">
-                        <div class="flex flex-row justify-between">
-                        <img src="../images/icons/Delete.png" alt="" class="h-8 object-scale-down ">
-                        <img src="../images/icons/Cart 3.png" alt="" class="h-8 object-scale-down ml-10">
-                        </div>
-                    </div>
-                </div>
-                <div class="flex flex-row justify-between h-20 mb-6">
-                    <div class="flex flex-row justify-between  mr-32">
-                        <div class="mr-6">
-                            <img src="../images/icons/Resin Background 2.png" alt="" class="h-16 object-scale-down border-4 border-blue">
-                        </div>
-                        <div class="flex flex-col font-semibold justify-center h-16">
-                            <div> Nyansapo Coloured Pendant </div>
-                            <div> GHC 13 </div>
-                        </div>
-                    </div>
-                    <div class="flex justify-between items-center">
-                        <div class="flex flex-row justify-between">
-                        <img src="../images/icons/Delete.png" alt="" class="h-8 object-scale-down ">
-                        <img src="../images/icons/Cart 3.png" alt="" class="h-8 object-scale-down ml-10">
-                        </div>
-                    </div>
-                </div>
-                <div class="flex flex-row justify-between h-20 mb-6">
-                    <div class="flex flex-row justify-between  mr-32">
-                        <div class="mr-6">
-                            <img src="../images/icons/Resin Background 2.png" alt="" class="h-16 object-scale-down border-4 border-blue">
-                        </div>
-                        <div class="flex flex-col font-semibold justify-center h-16">
-                            <div> Nyansapo Coloured Pendant </div>
-                            <div> GHC 13 </div>
-                        </div>
-                    </div>
-                    <div class="flex justify-between items-center">
-                        <div class="flex flex-row justify-between">
-                        <a href=""><img src="../images/icons/Delete.png" alt="" class="h-8 object-scale-down "></a>
-                        <a href=""><img src="../images/icons/Cart 3.png" alt="" class="h-8 object-scale-down ml-10"></a>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
+            <?php
+            }
+            ?>
+        </div>
 
 </section>
 
@@ -200,3 +118,15 @@
 
 </body>
 </html>
+
+<?php
+    }
+} else {
+    echo "
+        <script>
+        alert('User not logged in');
+        document.location.href='../index.php';
+        </script>
+
+        ";
+}

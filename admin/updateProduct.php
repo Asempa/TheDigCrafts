@@ -6,9 +6,14 @@ $allproducts = select_all_products_controller();
 $categories = select_all_categories_controller();
 $brands = select_all_brands_controller();
 
+// if (isset($_GET['product_id'])) {
+//     $one_product = select_a_product_controller($_GET['product_id']);
+// }
+
+$product_id = $_GET['product_id'];
+
 if (isset($_SESSION["user_id"]) && isset($_SESSION["user_role"])) {
     if ($_SESSION["user_role"] === '1') {
-
 ?>
 
 <!DOCTYPE html>
@@ -17,7 +22,7 @@ if (isset($_SESSION["user_id"]) && isset($_SESSION["user_role"])) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add To Products</title>
+    <title>Update Products</title>
     <link rel="stylesheet" href="../css/style.css">
 
 </head>
@@ -34,10 +39,10 @@ if (isset($_SESSION["user_id"]) && isset($_SESSION["user_role"])) {
     <div class="bg-blue p-3 m-3 w-14 text-white font-semibold"> <a href="adminProducts.php">  Back </a></div>
 
 <section class="mb-24">
-    <div class="flex items-center justify-center font-bold text-3xl mt-12 text-blue"> Add to Product</div>
+    <div class="flex items-center justify-center font-bold text-3xl mt-12 text-blue"> Update Product</div>
 
 
-    <form action="../actions/addProduct.php" enctype="multipart/form-data" method="POST" class="grid grid-cols-2 mt-12 w-1/2 mx-auto border-2 border-gray rounded-xl">
+    <form action="../actions/addBrand.php?product_id=<?php echo $product_id?>" enctype="multipart/form-data" method="POST" class="grid grid-cols-2 mt-12 w-1/2 mx-auto border-2 border-gray rounded-xl">
         <div class="p-2">
             <div class="my-3 text-base font-bold text-blue">Brand</div>
             <select name="brand" id="brand" class="w-2/3 border-2">
@@ -97,7 +102,7 @@ if (isset($_SESSION["user_id"]) && isset($_SESSION["user_role"])) {
             <small class="text-red"></small>
         </div>
 
-        <button type="submit" id="addProduct" name="addProduct" class="btn btn-primary my-12 ml-3 p-3 bg-green text-white font-bold">Add Product</button>
+        <button type="submit" id="addProduct" name="editProduct" class="btn btn-primary my-12 ml-3 p-3 bg-green text-white font-bold">Update Product</button>
     </form>
 </section>
 

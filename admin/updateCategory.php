@@ -1,9 +1,16 @@
 <?php
+
 include_once (dirname(__FILE__)) . '/../settings/core.php';
+include_once (dirname(__FILE__)) . '/../controller/productController.php';
+
+$categories = select_all_categories_controller();
+$cat_id = $_GET['cat_id'];
+
 if (isset($_SESSION["user_id"]) && isset($_SESSION["user_role"])) {
     if ($_SESSION["user_role"] === '1') {
 
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -11,7 +18,7 @@ if (isset($_SESSION["user_id"]) && isset($_SESSION["user_role"])) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add To Brand</title>
+    <title>Update Category</title>
     <link rel="stylesheet" href="../css/style.css">
 
 </head>
@@ -28,13 +35,13 @@ if (isset($_SESSION["user_id"]) && isset($_SESSION["user_role"])) {
     <div class="bg-blue p-3 m-3 w-14 text-white font-semibold"> <a href="adminProducts.php">  Back </a></div>
 
 <section>
-    <div class="flex items-center justify-center font-bold text-3xl mt-12 text-blue"> Add to Brand</div>
+    <div class="flex items-center justify-center font-bold text-3xl mt-12 text-blue">Update Category</div>
 
 
-    <form action="../actions/addBrand.php" method="POST" id="form" class="flex flex-col items-center justify-center mt-12 w-1/2 mx-auto border-2 border-gray rounded-xl">
-        <div class="my-6 text-base font-bold text-blue">Brand</div>
-        <input type="text" name="name" id="name" class="border-2 border-blue" required>
-        <button type="submit" id="add" name="addBrand" class="btn btn-primary my-12 p-3 bg-green text-white font-bold">Add Brand</button>
+    <form action="../actions/addBrand.php?cat_id=<?php echo $cat_id?>" method="POST" id="form" class="flex flex-col items-center justify-center mt-12 w-1/2 mx-auto border-2 border-gray rounded-xl">
+        <div class="my-6 text-base font-bold text-blue">Category</div>
+        <input type="text" name="name" id="" required class="border-2 border-blue">
+        <button type="submit" name="addCategory" class="btn btn-primary my-12 p-3 bg-green text-white font-bold">Update Category</button>
     </form>
 </section>
 

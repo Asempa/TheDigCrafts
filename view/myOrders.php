@@ -1,3 +1,28 @@
+<?php
+    include_once (dirname(__FILE__)) . '/../settings/core.php';
+    include_once (dirname(__FILE__)) . '/../controller/productController.php';
+    include_once (dirname(__FILE__)) . '/../controller/cartController.php';
+    include_once (dirname(__FILE__)) . '/../controller/wishlistController.php';
+
+
+    if (isset($_SESSION['user_id'])) {
+        $cart_count = count_cart_lg_controller($_SESSION['user_id']);
+    } else {
+        $ip_Address = getIpAddress();
+        $cart_count = count_cart_gst_controller($ip_Address);
+    }
+
+    if (isset($_SESSION['user_id'])) {
+        $wishlist_count = count_wishlist_lg_controller($_SESSION['user_id']);
+    }
+
+    $userOrder = select_orderDetails_controller($_SESSION["user_id"]);
+
+if (isset($_SESSION["user_id"]) && isset($_SESSION["user_role"])) {
+    if ($_SESSION["user_role"] === '2') {
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,28 +37,26 @@
 
 <section class="bg-blue text-orange flex justify-between h-12 font-bold">
     <div class="p-4 flex items-center">TheDigCrafts</div>
-    <div class="flex items-center">Shop</div>
+    <a href="../view/shop.php"><div class="flex items-center">Shop</div></a>
     <div class="flex flex-row items-center">
         <div class="flex flex-row items-center">
             <img src="../images/icons/Wishlist.png" class="h-6 object-scale-down " alt="">
-            <div class="text-base">(3)</div>
+            <div class="text-base">(<?php echo $wishlist_count['count']; ?>)</div>
         </div>
 
-        <div class="flex flex-row items-center">
+        <a href="cart.php"><div class="flex flex-row items-center">
             <img src="../images/icons/Cart.png" class="h-6 object-scale-down ml-6" alt="">
-            <div class="">(5)</div>
-        </div>
+            <div class="">(<?php echo $cart_count['count']; ?>)</div>
+        </div></a>
 
-        <img src="../images/icons/Avatar.png" class=" h-6 object-scale-down items-center m-6" alt="">
+        <a href="../settings/logout.php"><div class="mx-6">Logout</div></a>
 
     </div>
 </section>
 
-    <div class="bg-blue p-3 m-3 w-14 text-white font-semibold"> <a href="">  Back </a></div>
-
 <section class="flex flex-row mt-12">
     <div class="flex flex-col justify-between items-start mx-8 font-bold w-1/6">
-        <a href="" class="w-full mb-6"><div class="flex items-center p-3 rounded-lg border-2 border-gray w-full text-blue font-bold">
+        <a href="../view/myProfile.php" class="w-full mb-6"><div class="flex items-center p-3 rounded-lg border-2 border-gray w-full text-blue font-bold">
             <img src="../images/icons/Avatar 2.png" alt="" class="h-8 object-scale-down mr-6">
             <div> Profile </div>
         </div></a>
@@ -43,16 +66,12 @@
             <div> My Orders </div>
         </div>
 
-        <a href="" class="w-full mb-6"><div class="flex items-center border-2 border-gray rounded-lg p-3">
+        <a href="../view/myWishlist.php" class="w-full mb-6"><div class="flex items-center border-2 border-gray rounded-lg p-3">
             <img src="../images/icons/Wishlist 3.png" alt="" class="h-8 object-scale-down mr-6">
             <div> Wishlist </div>
         </div></a>
 
 
-        <a href="" class="w-full mb-6"><div class="flex items-center border-2 border-gray rounded-lg p-3">
-            <img src="../images/icons/Review.png" alt="" class="h-8 object-scale-down mr-6">
-            <div> Review </div>
-        </div></a>
 
     </div>
 
@@ -63,44 +82,17 @@
             <div> Invoice ID </div>
             <div>Order Status </div>
         </div>
-        <div class="grid grid-cols-4 gap-32 font-semibold  place-items-center mt-10 ">
-            <div> 12345</div>
-            <div>12 - 01 - 21</div>
-            <div>12345</div>
-            <div>Completed</div>
-        </div>
 
+    <?php
+        foreach($userOrder as $order){?>
         <div class="grid grid-cols-4 gap-32 font-semibold  place-items-center mt-10 ">
-            <div> 12345</div>
-            <div>12 - 01 - 21</div>
-            <div>12345</div>
-            <div>Completed</div>
+            <div><?php echo $order['order_id']; ?></div>
+            <div><?php echo $order['order_date']; ?></div>
+            <div><?php echo $order['invoice_no']; ?></div>
+            <div><?php echo $order['order_status']; ?></div>
         </div>
-        <div class="grid grid-cols-4 gap-32 font-semibold  place-items-center mt-10 ">
-            <div> 12345</div>
-            <div>12 - 01 - 21</div>
-            <div>12345</div>
-            <div>Completed</div>
-        </div>
-        <div class="grid grid-cols-4 gap-32 font-semibold  place-items-center mt-10 ">
-            <div> 12345</div>
-            <div>12 - 01 - 21</div>
-            <div>12345</div>
-            <div>Completed</div>
-        </div>
-
-        <div class="grid grid-cols-4 gap-32 font-semibold  place-items-center mt-10 ">
-            <div> 12345</div>
-            <div>12 - 01 - 21</div>
-            <div>12345</div>
-            <div>Completed</div>
-        </div>
-        <div class="grid grid-cols-4 gap-32 font-semibold  place-items-center mt-10 ">
-            <div> 12345</div>
-            <div>12 - 01 - 21</div>
-            <div>12345</div>
-            <div>Completed</div>
-        </div>
+    <?php
+    }?>
 
     </div>
 
@@ -119,3 +111,15 @@
 
 </body>
 </html>
+
+<?php
+    }
+} else {
+    echo "
+        <script>
+        alert('User not logged in');
+        document.location.href='../index.php';
+        </script>
+
+        ";
+}

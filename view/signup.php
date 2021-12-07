@@ -9,62 +9,57 @@
 </head>
 <body>
 
-<section class="bg-blue text-orange flex justify-between h-12 font-bold">
+<section class="bg-blue text-orange flex justify-around h-12 font-bold">
     <div class="p-4 flex items-center">TheDigCrafts</div>
     <div class="flex items-center">Shop</div>
-    <div class="flex flex-row items-center">
-        <div class="flex flex-row items-center">
-            <img src="../images/icons/Wishlist.png" class="h-6 object-scale-down " alt="">
-            <div class="text-base">(3)</div>
-        </div>
-
-        <div class="flex flex-row items-center">
-            <img src="../images/icons/Cart.png" class="h-6 object-scale-down ml-6" alt="">
-            <div class="">(5)</div>
-        </div>
-
-        <img src="../images/icons/Avatar.png" class=" h-6 object-scale-down items-center m-6" alt="">
-
-    </div>
 </section>
 
-<section class="h-screen bg-white">
+<section class=" bg-white mb-12">
 
-    <div class="bg-blue p-3 m-3 w-14 text-white font-semibold"> <a href="">  Back </a></div>
+    <div class="bg-blue p-3 m-3 w-14 text-white font-semibold"> <a href="../view/login.php">  Back </a></div>
     <div class="flex items-center justify-center m-16 text-3xl font-bold text-blue "> Sign Up </div>
 
     <div class="flex items-center justify-center">
-        <form action="" class="bg-blue w-6/12 p-12 grid grid-cols-2 gap-6 rounded-md font-bold">
-            <div class="">
+        <form id="form" method="POST" action="../actions/registerAccount.php" class="bg-blue w-8/12 p-6 grid grid-rows-2 gap-6 rounded-md font-bold">
+            <div class="grid grid-rows-3">
                 <p class="text-white">First Name</p>
-                <input type="text" name="" id="" class="mt-3 h-9">
+                <input type="text" name="fname" id="fname" class=" h-9">
+                <small class="text-red"></small>
             </div>
-            <div class="">
+            <div class="grid grid-rows-3">
                 <p class="text-white">Last Name</p>
-                <input type="text" name="" id="" class="mt-3 h-9">
+                <input type="text" name="lname" id="lname" class=" h-9">
+                <small class="text-red"></small>
             </div>
 
-            <div class="">
+            <div class="grid grid-rows-3">
                 <p class="text-white">Phone Number</p>
-                <input type="text" name="" id="" class="mt-3 h-9">
+                <input type="text" name="phone" id="phone" class="h-9">
+                <small class="text-red"></small>
             </div>
-            <div class="">
+            <div class="grid grid-rows-3">
                 <p class="text-white">Email</p>
-                <input type="text" name="" id="" class="mt-3 h-9">
+                <input type="email" name="email" id="email" class="h-9">
+                <small class="text-red"></small>
             </div>
-            <div class="">
+            <div class="grid grid-rows-3">
                 <p class="text-white">Password</p>
-                <input type="text" name="" id="" class="mt-3 h-9">
+                <input type="password" name="password" id="password" class="h-9">
+                <small class="text-red"></small>
             </div>
-            <div class="">
+            <div class="grid grid-rows-3">
                 <p class="text-white">Confirm Password</p>
-                <input type="text" name="" id="" class="mt-3 h-9">
+                <input type="password" name="confirmpassword" id="confirmpassword" class="h-9">
+                <small class="text-red"></small>
             </div>
 
-            <button type="submit" class="bg-green text-white font-bold text-2xl p-2 mt-6 rounded-md"> Create account </button>
+            <button type="submit" id="submit" name="submit" class="bg-green text-white font-bold text-2xl p-2 mt-6 rounded-md"> Create account </button>
 
         </form>
     </div>
+
+    <a href="login.php" class="flex items-center justify-center my-8 w-1/6 mx-auto text-xl font-bold text-white  bg-blue p-2"><div class=""> Log In </div></a>
+
 </section>
 
 <section class="h-64 bg-blue mt-32">
@@ -77,5 +72,8 @@
         <a href=""> <img src="../images/icons/Instagram.png" class="h-12" alt=""> </a>
     </div>
 </section>
+
+    <script src="../js/register.js"></script>
+
 </body>
 </html>

@@ -1,3 +1,23 @@
+<?php
+include_once (dirname(__FILE__)) . '/../settings/core.php';
+include_once (dirname(__FILE__)) . '/../controller/productController.php';
+include_once (dirname(__FILE__)) . '/../controller/userController.php';
+include_once (dirname(__FILE__)) . '/../controller/cartController.php';
+
+
+$products = select_all_products_controller();
+$categories = select_all_categories_controller();
+$brands = select_all_brands_controller();
+
+
+
+$productCount = count_products_controller();
+
+if (isset($_SESSION["user_id"]) && isset($_SESSION["user_role"])) {
+    if ($_SESSION["user_role"] === '1') {
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,7 +33,7 @@
 <section class="bg-blue text-orange flex justify-between h-12 font-bold">
     <div class="p-4 flex items-center">TheDigCrafts</div>
     <div class="flex flex-row items-center">
-        <img src="../images/icons/Avatar.png" class=" h-6 object-scale-down items-center m-6" alt="">
+        <a href="../settings/logout.php"><div class="mr-6">Logout</div></a>
     </div>
     </div>
 </section>
@@ -26,20 +46,14 @@
             <div> Products </div>
         </div>
 
-        <a href="" class="w-full"><div class="flex items-center border-2 border-gray rounded-lg p-3">
+        <a href="adminPayments.php" class="w-full"><div class="flex items-center border-2 border-gray rounded-lg p-3">
             <img src="../images/icons/Payments.png" alt="" class="h-8 object-scale-down mr-6">
             <div> Payments </div>
         </div></a>
 
-        <a href="" class="w-full"><div class="flex items-center border-2 border-gray rounded-lg p-3">
+        <a href="adminOrders.php" class="w-full"><div class="flex items-center border-2 border-gray rounded-lg p-3">
             <img src="../images/icons/Orders.png" alt="" class="h-8 object-scale-down mr-6">
             <div> Orders </div>
-        </div></a>
-
-
-        <a href="" class="w-full"><div class="flex items-center border-2 border-gray rounded-lg p-3">
-            <img src="../images/icons/Avatar 2.png" alt="" class="h-8 object-scale-down mr-6">
-            <div> Customers </div>
         </div></a>
 
     </div>
@@ -49,20 +63,20 @@
         <div class="flex flex-row justify-between font-bold text-base">
             <div class="flex flex-row bg-blue p-3">
                 <div class="text-white mr-3">  Total Products </div>
-                <div class="text-orange">17</div>
+                <div class="text-orange"><?php echo $productCount['count'] ?></div>
             </div>
 
-            <a href=""><div class="flex flex-row items-center bg-blue p-3 text-white">
+            <a href="addBrand.php"><div class="flex flex-row items-center bg-blue p-3 text-white">
                 <img src="../images/icons/Brand.png" alt="" class="mr-3 h-6 object-scale-down">
                 <div>Add to Brand</div>
             </div></a>
 
-            <a href="" ><div class="flex flex-row items-center bg-blue p-3 text-white">
+            <a href="addCategory.php" ><div class="flex flex-row items-center bg-blue p-3 text-white">
                 <img src="../images/icons/Category.png" alt="" class="mr-3 h-6 object-scale-down">
                 <div>Add to Category</div>
             </div></a>
 
-            <a href="" ><div class="flex flex-row items-center bg-blue p-3 text-white">
+            <a href="addProduct.php" ><div class="flex flex-row items-center bg-blue p-3 text-white">
                 <img src="../images/icons/Products.png" alt="" class="mr-3 h-6 object-scale-down">
                 <div>Add to Products</div>
             </div></a>
@@ -77,51 +91,18 @@
                     <div>Actions</div>
                 </div>
 
-                <div class="flex flex-row justify-between mr-12 mt-6">
-                    <div>1</div>
-                    <div>Adinkrahene</div>
-                    <div class="flex flex-row">
-                        <a href=""><img src="../images/icons/Edit.png" alt="" class="h-6 object-scale-down mr-2"></a>
-                        <a href=""><img src="../images/icons/Delete.png" alt="" class="h-6 object-scale-down"></a>
-                    </div>
-                </div>
-
-                <div class="flex flex-row justify-between mr-12 mt-6">
-                    <div>1</div>
-                    <div>Adinkrahene</div>
-                    <div class="flex flex-row">
-                        <a href=""><img src="../images/icons/Edit.png" alt="" class="h-6 object-scale-down mr-2"></a>
-                        <a href=""><img src="../images/icons/Delete.png" alt="" class="h-6 object-scale-down"></a>
-                    </div>
-                </div>
-
-                <div class="flex flex-row justify-between mr-12 mt-6">
-                    <div>1</div>
-                    <div>Adinkrahene</div>
-                    <div class="flex flex-row">
-                        <a href=""><img src="../images/icons/Edit.png" alt="" class="h-6 object-scale-down mr-2"></a>
-                        <a href=""><img src="../images/icons/Delete.png" alt="" class="h-6 object-scale-down"></a>
-                    </div>
-                </div>
-
-                <div class="flex flex-row justify-between mr-12 mt-6">
-                    <div>1</div>
-                    <div>Adinkrahene</div>
-                    <div class="flex flex-row">
-                        <a href=""><img src="../images/icons/Edit.png" alt="" class="h-6 object-scale-down mr-2"></a>
-                        <a href=""><img src="../images/icons/Delete.png" alt="" class="h-6 object-scale-down"></a>
-                    </div>
-                </div>
-
-
-                <div class="flex flex-row justify-between mr-12 mt-6">
-                    <div>1</div>
-                    <div>Adinkrahene</div>
-                    <div class="flex flex-row">
-                        <a href=""><img src="../images/icons/Edit.png" alt="" class="h-6 object-scale-down mr-2"></a>
-                        <a href=""><img src="../images/icons/Delete.png" alt="" class="h-6 object-scale-down"></a>
-                    </div>
-                </div>
+                    <?php
+                        foreach($brands as $brand){?>
+                        <div class="flex flex-row justify-between mr-12 mt-6">
+                            <div> <?php echo "{$brand["brand_id"]}"?></div>
+                            <div> <?php echo "{$brand["brand_name"]}"?></div>
+                            <div class="flex flex-row">
+                                <a href="<?php echo "../admin/updateBrand.php?brand_id=" . $brand['brand_id']; ?>"><img src="../images/icons/Edit.png" alt="" class="h-6 object-scale-down mr-2"></a>
+                                <a href="<?php echo "../actions/addBrand.php?id=" . $brand['brand_id']; ?>"><img src="../images/icons/Delete.png" alt="" class="h-6 object-scale-down"></a>
+                            </div>
+                        </div>
+                    <?php
+                    }?>
 
             </div>
 
@@ -134,51 +115,19 @@
                     <div>Actions</div>
                 </div>
 
-                <div class="flex flex-row justify-between mr-12 mt-6">
-                    <div>1</div>
-                    <div>Adinkrahene</div>
-                    <div class="flex flex-row">
-                        <a href=""><img src="../images/icons/Edit.png" alt="" class="h-6 object-scale-down mr-2"></a>
-                        <a href=""><img src="../images/icons/Delete.png" alt="" class="h-6 object-scale-down"></a>
-                    </div>
-                </div>
+                    <?php
+                        foreach($categories as $category){?>
+                        <div class="flex flex-row justify-between mr-12 mt-6">
+                            <div> <?php echo "{$category["cat_id"]}"?></div>
+                            <div> <?php echo "{$category["cat_name"]}"?></div>
+                            <div class="flex flex-row">
+                                <a href="<?php echo "../admin/updateCategory.php?cat_id=" . $category['cat_id']; ?>"><img src="../images/icons/Edit.png" alt="" class="h-6 object-scale-down mr-2"></a>
+                                <a href="<?php echo "../actions/addBrand.php?del_id=" . $category['cat_id']; ?>"><img src="../images/icons/Delete.png" alt="" class="h-6 object-scale-down"></a>
+                            </div>
+                        </div>
+                    <?php
+                    }?>
 
-                <div class="flex flex-row justify-between mr-12 mt-6">
-                    <div>1</div>
-                    <div>Adinkrahene</div>
-                    <div class="flex flex-row">
-                        <a href=""><img src="../images/icons/Edit.png" alt="" class="h-6 object-scale-down mr-2"></a>
-                        <a href=""><img src="../images/icons/Delete.png" alt="" class="h-6 object-scale-down"></a>
-                    </div>
-                </div>
-
-                <div class="flex flex-row justify-between mr-12 mt-6">
-                    <div>1</div>
-                    <div>Adinkrahene</div>
-                    <div class="flex flex-row">
-                        <a href=""><img src="../images/icons/Edit.png" alt="" class="h-6 object-scale-down mr-2"></a>
-                        <a href=""><img src="../images/icons/Delete.png" alt="" class="h-6 object-scale-down"></a>
-                    </div>
-                </div>
-
-                <div class="flex flex-row justify-between mr-12 mt-6">
-                    <div>1</div>
-                    <div>Adinkrahene</div>
-                    <div class="flex flex-row">
-                        <a href=""><img src="../images/icons/Edit.png" alt="" class="h-6 object-scale-down mr-2"></a>
-                        <a href=""><img src="../images/icons/Delete.png" alt="" class="h-6 object-scale-down"></a>
-                    </div>
-                </div>
-
-
-                <div class="flex flex-row justify-between mr-12 mt-6">
-                    <div>1</div>
-                    <div>Adinkrahene</div>
-                    <div class="flex flex-row">
-                        <a href=""><img src="../images/icons/Edit.png" alt="" class="h-6 object-scale-down mr-2"></a>
-                        <a href=""><img src="../images/icons/Delete.png" alt="" class="h-6 object-scale-down"></a>
-                    </div>
-                </div>
 
             </div>
 
@@ -203,50 +152,26 @@
                     <div>Actions</div>
                 </div>
 
+
+            <?php
+                foreach($products as $product){?>
                 <div class="w-full grid grid-cols-8 gap-8 justify-between items-center mt-6">
-                    <div>1</div>
-                    <img src="../images/icons/Resin Background 2.png" alt="" class="h-6 object-scale-down">
-                    <div class="">Nyansapo Coloured Pendant</div>
-                    <div>GHC 13 </div>
-                    <div>Adinkrahene</div>
-                    <div>Adinkrahene</div>
-                    <div>16</div>
+                    <div><?php echo "{$product["product_id"]}"?></div>
+                    <img src="<?php echo "{$product["product_image"]}"?>" alt="" class="h-6 object-scale-down">
+                    <div class=""><?php echo "{$product["product_title"]}"?></div>
+                    <div> &#8373; <?php echo "{$product["product_price"]}"?> </div>
+                    <div><?php echo "{$product["brand_name"]}"?></div>
+                    <div><?php echo "{$product["cat_name"]}"?></div>
+                    <div><?php echo "{$product["stock"]}"?></div>
                     <div class="flex flex-row">
-                        <a href=""><img src="../images/icons/Edit.png" alt="" class="h-6 object-scale-down mr-2"></a>
-                        <a href=""><img src="../images/icons/Delete.png" alt="" class="h-6 object-scale-down"></a>
+                        <a href="<?php echo "../admin/updateProduct.php?product_id=" . $product['product_id']; ?>"><img src="../images/icons/Edit.png" alt="" class="h-6 object-scale-down mr-2"></a>
+                        <a href="<?php echo "../actions/addBrand.php?delete_id=" . $product['product_id']; ?>"><img src="../images/icons/Delete.png" alt="" class="h-6 object-scale-down"></a>
                     </div>
                 </div>
-
-                <div class="w-full grid grid-cols-8 gap-8 justify-between items-center mt-6">
-                    <div>1</div>
-                    <img src="../images/icons/Resin Background 2.png" alt="" class="h-6 object-scale-down">
-                    <div class="">Nyansapo Coloured Pendant</div>
-                    <div>GHC 13 </div>
-                    <div>Adinkrahene</div>
-                    <div>Adinkrahene</div>
-                    <div>16</div>
-                    <div class="flex flex-row">
-                        <a href=""><img src="../images/icons/Edit.png" alt="" class="h-6 object-scale-down mr-2"></a>
-                        <a href=""><img src="../images/icons/Delete.png" alt="" class="h-6 object-scale-down"></a>
-                    </div>
-                </div>
-
-                <div class="w-full grid grid-cols-8 gap-8 justify-between items-center mt-6">
-                    <div>1</div>
-                    <img src="../images/icons/Resin Background 2.png" alt="" class="h-6 object-scale-down">
-                    <div class="">Nyansapo Coloured Pendant</div>
-                    <div>GHC 13 </div>
-                    <div>Adinkrahene</div>
-                    <div>Adinkrahene</div>
-                    <div>16</div>
-                    <div class="flex flex-row">
-                        <a href=""><img src="../images/icons/Edit.png" alt="" class="h-6 object-scale-down mr-2"></a>
-                        <a href=""><img src="../images/icons/Delete.png" alt="" class="h-6 object-scale-down"></a>
-                    </div>
-                </div>
-
-            </div>
+            <?php
+            }?>
         </div>
+    </div>
 
 </section>
 
@@ -263,3 +188,15 @@
 
 </body>
 </html>
+
+<?php
+    }
+} else {
+    echo "
+        <script>
+        alert('Administrator not logged in');
+        document.location.href='../index.php';
+        </script>
+
+        ";
+}

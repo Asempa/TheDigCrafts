@@ -1,3 +1,10 @@
+<?php
+include_once (dirname(__FILE__)) . '/../settings/core.php';
+if (isset($_SESSION["user_id"]) && isset($_SESSION["user_role"])) {
+    if ($_SESSION["user_role"] === '1') {
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,21 +20,21 @@
 <section class="bg-blue text-orange flex justify-between h-12 font-bold">
     <div class="p-4 flex items-center">TheDigCrafts</div>
     <div class="flex flex-row items-center">
-        <img src="../images/icons/Avatar.png" class=" h-6 object-scale-down items-center m-6" alt="">
+        <a href="../settings/logout.php"><div class="mr-6">Logout</div></a>
 
     </div>
 </section>
 
-    <div class="bg-blue p-3 m-3 w-14 text-white font-semibold"> <a href="">  Back </a></div>
+    <div class="bg-blue p-3 m-3 w-14 text-white font-semibold"> <a href="adminProducts.php">  Back </a></div>
 
 <section>
     <div class="flex items-center justify-center font-bold text-3xl mt-12 text-blue"> Add to Category</div>
 
 
-    <form action="" class="flex flex-col items-center justify-center mt-12 w-1/2 mx-auto border-2 border-gray rounded-xl">
+    <form action="../actions/addCategory.php" method="POST" id="form" class="flex flex-col items-center justify-center mt-12 w-1/2 mx-auto border-2 border-gray rounded-xl">
         <div class="my-6 text-base font-bold text-blue">Category</div>
-        <input type="text" name="" id="" class="border-2 border-blue">
-        <button type="submit" class="btn btn-primary my-12 p-3 bg-green text-white font-bold">Add Category</button>
+        <input type="text" name="name" id="" required class="border-2 border-blue">
+        <button type="submit" name="addCategory" class="btn btn-primary my-12 p-3 bg-green text-white font-bold">Add Category</button>
     </form>
 </section>
 
@@ -45,3 +52,15 @@
 
 </body>
 </html>
+
+<?php
+    }
+} else {
+    echo "
+        <script>
+        alert('Administrator not logged in');
+        document.location.href='../index.php';
+        </script>
+
+        ";
+}
