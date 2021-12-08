@@ -36,8 +36,7 @@
 
         </form>
     </div>
-
-    <a href="signup.php" class="flex items-center justify-center my-8 w-1/6 mx-auto text-xl font-bold text-white  bg-blue p-2"><div class=""> Sign Up </div></a>
+    <div class="flex items-center justify-center my-8 mx-auto text-xl font-bold text-blue p-2 "> Do not have an account? <a class="ml-3 text-orange" href="signup.php"> Sign Up Here </a ></div>
 
 </section>
 

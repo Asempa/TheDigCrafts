@@ -20,36 +20,36 @@
     <div class="flex items-center justify-center m-16 text-3xl font-bold text-blue "> Sign Up </div>
 
     <div class="flex items-center justify-center">
-        <form id="form" method="POST" action="../actions/registerAccount.php" class="bg-blue w-8/12 p-6 grid grid-rows-2 gap-6 rounded-md font-bold">
-            <div class="grid grid-rows-3">
+        <form id="form" method="POST" action="../actions/registerAccount.php" class="bg-blue w-1/2 p-6 grid grid-rows-2 gap-6 rounded-md font-bold">
+            <div class="">
                 <p class="text-white">First Name</p>
-                <input type="text" name="fname" id="fname" class=" h-9">
+                <input type="text" name="fname" id="fname" class=" w-full h-9">
                 <small class="text-red"></small>
             </div>
-            <div class="grid grid-rows-3">
+            <div class="">
                 <p class="text-white">Last Name</p>
-                <input type="text" name="lname" id="lname" class=" h-9">
+                <input type="text" name="lname" id="lname" class=" w-full h-9">
                 <small class="text-red"></small>
             </div>
 
-            <div class="grid grid-rows-3">
+            <div class="">
                 <p class="text-white">Phone Number</p>
-                <input type="text" name="phone" id="phone" class="h-9">
+                <input type="text" name="phone" id="phone" class=" w-full h-9">
                 <small class="text-red"></small>
             </div>
-            <div class="grid grid-rows-3">
+            <div class="">
                 <p class="text-white">Email</p>
-                <input type="email" name="email" id="email" class="h-9">
+                <input type="email" name="email" id="email" class="w-full h-9">
                 <small class="text-red"></small>
             </div>
-            <div class="grid grid-rows-3">
+            <div class="">
                 <p class="text-white">Password</p>
-                <input type="password" name="password" id="password" class="h-9">
+                <input type="password" name="password" id="password" class="w-full h-9">
                 <small class="text-red"></small>
             </div>
-            <div class="grid grid-rows-3">
+            <div class="">
                 <p class="text-white">Confirm Password</p>
-                <input type="password" name="confirmpassword" id="confirmpassword" class="h-9">
+                <input type="password" name="confirmpassword" id="confirmpassword" class="w-full h-9">
                 <small class="text-red"></small>
             </div>
 
@@ -58,7 +58,7 @@
         </form>
     </div>
 
-    <a href="login.php" class="flex items-center justify-center my-8 w-1/6 mx-auto text-xl font-bold text-white  bg-blue p-2"><div class=""> Log In </div></a>
+    <div class="flex items-center justify-center my-8 mx-auto text-xl font-bold text-blue p-2 "> Already have an account? <a class="ml-3 text-orange" href="login.php"> Login Here </a ></div>
 
 </section>
 

@@ -37,10 +37,10 @@ if (isset($_SESSION["user_id"]) && isset($_SESSION["user_role"])) {
     <div class="flex items-center justify-center font-bold text-3xl mt-12 text-blue"> Add to Product</div>
 
 
-    <form action="../actions/addProduct.php" enctype="multipart/form-data" method="POST" class="grid grid-cols-2 mt-12 w-1/2 mx-auto border-2 border-gray rounded-xl">
-        <div class="p-2">
-            <div class="my-3 text-base font-bold text-blue">Brand</div>
-            <select name="brand" id="brand" class="w-2/3 border-2">
+    <form action="../actions/addProduct.php" enctype="multipart/form-data" method="POST" class="bg-blue text-white grid grid-rows-3 mt-12 w-1/2 mx-auto border-2 border-gray rounded-xl p-3">
+        <div class="">
+            <div class="my-3 text-base font-bold ">Brand</div>
+            <select name="brand" id="brand" class="w-full border-2 text-blue border-orange">
                 <?php
                     foreach($brands as $brand){?>
                     <option value="<?php echo "{$brand["brand_id"]}"?>"> <?php echo " {$brand["brand_name"]} "?> </option><?php
@@ -49,9 +49,9 @@ if (isset($_SESSION["user_id"]) && isset($_SESSION["user_role"])) {
             <small class="text-red"></small>
         </div>
 
-        <div class="p-2">
-            <div class="my-3 text-base font-bold text-blue">Category</div>
-            <select name="category" id="category" class="w-2/3 border-2">
+        <div class="">
+            <div class="my-3 text-base font-bold">Category</div>
+            <select name="category" id="category" class="w-full border-2 text-blue border-orange">
                 <?php
                     foreach($categories as $category){?>
                     <option value="<?php echo "{$category["cat_id"]}"?>"> <?php echo " {$category["cat_name"]} "?> </option><?php
@@ -60,44 +60,44 @@ if (isset($_SESSION["user_id"]) && isset($_SESSION["user_role"])) {
             <small class="text-red"></small>
         </div>
 
-        <div class="p-2">
-            <div class="my-3 text-base font-bold text-blue">Title</div>
-            <input type="text" name="title" id="title" class="border-2 border-blue">
+        <div class="">
+            <div class="my-3 text-base font-bold">Title</div>
+            <input type="text" name="title" id="title" class="border-2 border-blue w-full">
             <small class="text-red"></small>
         </div>
 
-        <div class="p-2">
-            <div class="my-3 text-base font-bold text-blue">Price</div>
-            <input type="text" name="price" id="price" class="border-2 border-blue">
+        <div class="">
+            <div class="my-3 text-base font-bold">Price</div>
+            <input type="text" name="price" id="price" class="border-2 border-blue w-full">
             <small class="text-red"></small>
         </div>
 
-        <div class="p-2">
-            <div class="my-3 text-base font-bold text-blue">Description</div>
-            <input type="text" name="description" id="description" class="border-2 border-blue">
+        <div class="">
+            <div class="my-3 text-base font-bold ">Description</div>
+            <input type="text" name="description" id="description" class="border-2 border-blue w-full">
             <small class="text-red"></small>
         </div>
 
-        <div class="p-2">
-            <div class="my-3 text-base font-bold text-blue">Image</div>
-            <input type="file" name="image" id="image" accept="image/*" class="">
+        <div class="">
+            <div class="my-3 text-base font-bold">Image</div>
+            <input type="file" name="image" id="image" accept="image/*" class="w-full">
             <small class="text-red"></small>
         </div>
 
-        <div class="p-2">
-            <div class="my-3 text-base font-bold text-blue">Keyword</div>
-            <input type="text" name="keyword" id="keyword" class="border-2 border-blue">
+        <div class="">
+            <div class="my-3 text-base font-bold ">Keyword</div>
+            <input type="text" name="keyword" id="keyword" class="border-2 border-blue w-full">
             <small class="text-red"></small>
         </div>
 
 
-        <div class="p-2">
-            <div class="my-3 text-base font-bold text-blue">Stock</div>
-            <input type="text" name="stock" id="stock" class="border-2 border-blue">
+        <div class="">
+            <div class="my-3 text-base font-bold ">Stock</div>
+            <input type="text" name="stock" id="stock" class="border-2 border-blue w-full">
             <small class="text-red"></small>
         </div>
 
-        <button type="submit" id="addProduct" name="addProduct" class="btn btn-primary my-12 ml-3 p-3 bg-green text-white font-bold">Add Product</button>
+        <button type="submit" id="addProduct" name="addProduct" class="btn btn-primary my-12 mx-3 p-2 mr-3 bg-green text-white font-bold ">Add Product</button>
     </form>
 </section>
 
